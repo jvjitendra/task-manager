@@ -1,0 +1,1 @@
+TRUNCATE TABLE subtasks, tasks, users RESTART IDENTITY CASCADE;

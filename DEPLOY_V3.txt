@@ -1,0 +1,46 @@
+TASKFLOW V3 DEPLOY
+
+1) Replace frontend files in D:\Task Manager\frontend:
+   index.html
+   style.css
+   app.js
+   config.js
+
+2) Replace backend files in D:\Task Manager\backend:
+   app.py
+   requirements.txt
+
+3) Keep backend/.env local only. Do NOT commit it.
+
+4) Backend Vercel environment:
+   SECRET_KEY = existing production secret
+   DATABASE_URL = existing Neon connection
+   FRONTEND_URL = https://task-manager-frontend-tau-lemon.vercel.app
+   VAANI_API_URL = https://vaani-ai-workspace.vercel.app
+
+5) Commit and push:
+   cd "D:\Task Manager"
+   git add frontend/index.html frontend/style.css frontend/app.js frontend/config.js backend/app.py backend/requirements.txt
+   git commit -m "TaskFlow V3 premium workspace and Vaani integration"
+   git push origin main
+
+6) Vercel redeploys frontend/backend.
+
+7) Hard refresh frontend: Ctrl+Shift+R.
+
+V3 includes:
+- unified premium light/cream visual system
+- live local date/time/timezone
+- deadline date/time + due_at backend persistence
+- countdown and overdue urgency
+- Today/Priority/Analytics/Focus views
+- toast feedback
+- browser notifications setting
+- responsive sidebar/mobile layout
+- command palette Ctrl/Cmd+K
+- secure JWT auth
+- subtasks API
+- productivity API
+- Vaani chat through TaskFlow backend with authenticated TaskFlow context
+- allowlisted Vaani task actions for complete/delete
+- no API keys in frontend
