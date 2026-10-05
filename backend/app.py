@@ -27,7 +27,6 @@ elif DATABASE_URL.startswith("postgresql://"):
         1,
     )
 
-
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY", "dev-secret-change-me")
 app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
