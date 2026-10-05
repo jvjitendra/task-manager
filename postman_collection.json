@@ -1,0 +1,173 @@
+{
+  "info": {
+    "name": "TaskFlow API",
+    "_postman_id": "4d2a0f5f-6f0a-44b0-8c5e-taskflow-v1",
+    "description": "TaskFlow REST API collection for local and deployed environments.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:5000"
+    },
+    {
+      "key": "token",
+      "value": ""
+    },
+    {
+      "key": "task_id",
+      "value": "1"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/"
+      }
+    },
+    {
+      "name": "Register",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"full_name\": \"Jitendra Kumar Verma\",\n  \"email\": \"jitendra@example.com\",\n  \"password\": \"test123\"\n}"
+        },
+        "url": "{{base_url}}/api/register"
+      }
+    },
+    {
+      "name": "Login",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const json = pm.response.json();",
+              "if (json.token) {",
+              "  pm.collectionVariables.set('token', json.token);",
+              "}"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"jitendra@example.com\",\n  \"password\": \"test123\"\n}"
+        },
+        "url": "{{base_url}}/api/login"
+      }
+    },
+    {
+      "name": "Current User",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": "{{base_url}}/api/me"
+      }
+    },
+    {
+      "name": "Create Task",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Build portfolio\",\n  \"description\": \"Finish TaskFlow\",\n  \"status\": \"in_progress\",\n  \"priority\": \"high\"\n}"
+        },
+        "url": "{{base_url}}/api/tasks"
+      }
+    },
+    {
+      "name": "Get Tasks",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": "{{base_url}}/api/tasks"
+      }
+    },
+    {
+      "name": "Get One Task",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": "{{base_url}}/api/tasks/{{task_id}}"
+      }
+    },
+    {
+      "name": "Update Task",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"status\": \"done\",\n  \"priority\": \"medium\"\n}"
+        },
+        "url": "{{base_url}}/api/tasks/{{task_id}}"
+      }
+    },
+    {
+      "name": "Delete Task",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": "{{base_url}}/api/tasks/{{task_id}}"
+      }
+    }
+  ]
+}
