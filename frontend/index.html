@@ -1,11 +1,89 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f7f4ee"><title>TaskFlow — Focus. Plan. Progress.</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css"></head><body>
-<div class="site-noise" aria-hidden="true"></div><div id="toastRoot" class="toast-root" aria-live="polite"></div><div id="mobileShade" class="mobile-shade hidden"></div>
-<div id="appShell" class="app-shell"><aside id="sidebar" class="sidebar"><div class="side-brand"><button id="brandBtn" class="brand"><span class="brand-mark">TF</span><span><b>Task<span>Flow</span></b><small>FOCUS · PLAN · PROGRESS</small></span></button><button id="sidebarToggle" class="icon-btn">‹</button></div>
-<div class="workspace-chip"><span class="status-dot"></span><div><b>Personal workspace</b><small id="syncText">Synced</small></div><span>⌄</span></div><nav class="side-nav"><div class="nav-caption">WORKSPACE</div><button class="nav-item active" data-view="overview"><i data-icon="grid"></i><span>Overview</span><kbd>1</kbd></button><button class="nav-item" data-view="tasks"><i data-icon="check"></i><span>My Tasks</span><kbd>2</kbd></button><button class="nav-item" data-view="today"><i data-icon="calendar"></i><span>Today</span><kbd>3</kbd></button><button class="nav-item" data-view="priority"><i data-icon="flag"></i><span>Priority</span><kbd>4</kbd></button><button class="nav-item" data-view="analytics"><i data-icon="chart"></i><span>Analytics</span><kbd>5</kbd></button><button class="nav-item" data-view="focus"><i data-icon="target"></i><span>Focus</span><kbd>6</kbd></button><button id="vaaniNav" class="nav-item vaani-nav"><i data-icon="spark"></i><span>Ask Vaani</span><em>AI</em></button><div class="nav-caption">PERSONAL</div><button class="nav-item" data-view="profile"><i data-icon="user"></i><span>Profile</span></button><button class="nav-item" data-view="settings"><i data-icon="settings"></i><span>Settings</span></button></nav>
-<div class="side-bottom"><button id="newTaskSide" class="new-task"><span>＋</span> New task</button><div class="side-user"><span id="sideAvatar" class="avatar">JV</span><div><b id="sideName">Jitendra</b><small id="sideEmail">workspace</small></div><button id="logoutBtn" class="mini-btn" title="Log out">↗</button></div></div></aside>
-<main class="main"><header id="topbar" class="topbar"><div><div id="crumb" class="crumb">Workspace / <b>Overview</b></div><div class="mobile-title">TaskFlow</div></div><div class="top-actions"><div class="live-clock"><span id="liveDate">—</span><b id="liveTime">—</b><small id="liveZone">Asia/Kolkata · IST</small></div><button id="commandTop" class="command-btn">⌘K <span>Command</span></button><button id="profileTop" class="top-avatar">JV</button></div></header>
-<section id="authView" class="auth-screen"><div class="auth-brand"><span class="brand-mark big">TF</span><div><b>Task<span>Flow</span></b><small>FOCUS · PLAN · PROGRESS</small></div></div><div class="auth-layout"><div class="auth-copy"><span class="eyebrow">A calmer way to get things done</span><h1>Turn your plans into <span>visible progress.</span></h1><p>One focused workspace for tasks, priorities, deadlines and momentum — with Vaani beside you when the work gets complicated.</p><div class="auth-points"><span>✓ Real-time deadlines</span><span>✓ Smart productivity view</span><span>✓ Vaani AI assistant</span></div></div><div class="auth-card"><div class="auth-card-top"><span id="authMode" class="eyebrow">WELCOME BACK</span><span class="secure">● SECURE</span></div><h2 id="authTitle">Sign in</h2><p id="authSubtitle">Pick up where you left off.</p><form id="authForm"><label id="nameField" class="field hidden"><span>Full name</span><input id="fullName" maxlength="120" autocomplete="name" placeholder="Jitendra Kumar Verma"></label><label class="field"><span>Email</span><input id="email" type="email" autocomplete="email" placeholder="you@example.com" required></label><label class="field"><span>Password</span><div class="password-wrap"><input id="password" type="password" minlength="6" autocomplete="current-password" placeholder="Minimum 6 characters" required><button type="button" id="revealPass">Show</button></div></label><button id="authSubmit" class="primary-btn full" type="submit"><span id="authSubmitText">Enter workspace</span><span>→</span></button></form><button id="toggleAuth" class="auth-switch">New here? <b>Create an account</b></button><div class="auth-note">Your password is securely hashed before storage.</div></div></div></section>
-<section id="workspaceView" class="workspace hidden"><div id="viewRoot"></div></section></main></div>
-<div id="modalRoot"></div><div id="commandModal" class="overlay hidden"><div class="overlay-backdrop" data-close="command"></div><div class="command-modal"><div class="command-search"><span>⌘</span><input id="commandInput" placeholder="Search or run a command…"><kbd>ESC</kbd></div><div id="commandList"></div></div></div>
-<div id="vaaniModal" class="overlay hidden"><div class="overlay-backdrop" data-close="vaani"></div><div class="vaani-modal"><div class="vaani-head"><div><span class="eyebrow">TASKFLOW × VAANI</span><h2>Ask Vaani</h2><p>AI that can see your TaskFlow context.</p></div><button class="close-btn" data-close="vaani">×</button></div><div class="vaani-suggestions"><button data-vq="What should I focus on today?">Today’s focus</button><button data-vq="Show my overdue tasks and what I should do first.">Overdue</button><button data-vq="Plan my day from my current tasks.">Plan my day</button><button data-vq="Which task should I prioritize?">Prioritize</button></div><div id="vaaniMessages" class="vaani-messages"><div class="vaani-welcome"><span class="vaani-orb">V</span><div><b>Hi, I’m Vaani.</b><p>I can read your tasks, deadlines and productivity stats. Ask me what to do next.</p></div></div></div><form id="vaaniForm" class="vaani-form"><input id="vaaniInput" placeholder="Ask Vaani about your work…"><button type="submit">Send</button></form></div></div>
-<script src="config.js"></script><script src="app.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f4f6f9">
+<title>TaskFlow — Focus. Plan. Progress.</title>
+<meta name="description" content="TaskFlow — a focused productivity workspace for tasks, priorities and progress.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="ambient ambient-a"></div><div class="ambient ambient-b"></div><div class="grid-field"></div><div id="stars" class="stars" aria-hidden="true"></div>
+
+<header class="topbar" id="topbar">
+  <button class="brand" id="brandBtn" type="button" aria-label="Open TaskFlow overview">
+    <span class="brand-mark">TF</span><span><strong>Task<span>Flow</span></strong><small>FOCUS · PLAN · PROGRESS</small></span>
+  </button>
+  <div class="breadcrumbs" id="breadcrumbs"><span>Workspace</span><b>/</b><strong>Overview</strong></div>
+  <div class="top-actions">
+    <div class="live-time" aria-live="polite"><strong id="liveClock">--:--</strong><span id="liveDate">Loading date</span><em id="liveZone">Asia/Calcutta · GMT+5:30</em></div>
+    <span class="api-pill" id="apiPill"><i></i><span id="apiStatus">CHECKING API</span></span>
+    <button class="icon-btn top-icon" id="commandTop" title="Quick Actions" aria-label="Quick Actions">⌘K</button>
+    <button class="developer-top" id="profileTop" aria-label="Know the developer"><i data-icon="user"></i><span>Know the Developer</span></button>
+    <button id="logoutBtn" class="ghost-btn hidden">Log out</button>
+  </div>
+</header>
+
+<main>
+<section id="authView" class="auth-shell">
+  <div class="auth-ambient" aria-hidden="true">
+    <span class="ambient-blob ambient-blob-a"></span>
+    <span class="ambient-blob ambient-blob-b"></span>
+    <span class="ambient-blob ambient-blob-c"></span>
+    <span class="ambient-ring ambient-ring-a"></span>
+    <span class="ambient-ring ambient-ring-b"></span>
+  </div>
+  <div class="auth-backdrop-orbit orbit-a"></div><div class="auth-backdrop-orbit orbit-b"></div><div class="auth-noise"></div>
+  <div class="auth-brand"><span class="auth-logo">TF</span><div><strong>TaskFlow</strong><small>FOCUS · PLAN · PROGRESS</small></div></div>
+  <div class="auth-live-time" aria-live="polite"><strong id="authLiveClock">--:--:--</strong><span id="authLiveDate">Loading date</span><em id="authLiveZone">Asia/Calcutta · GMT+05:30</em></div>
+  <div class="auth-card">
+    <div class="auth-card-glow"></div>
+    <div class="auth-head"><div><span class="mini-label" id="authModeLabel">WELCOME BACK</span><h1 id="authTitle">Sign in</h1><p id="authSubtitle">Return to your tasks, priorities and progress.</p><div class="auth-micro-message" aria-live="polite"><span class="auth-micro-dot"></span><span id="authMicroMessage">Your workspace is ready when you are.</span></div></div><span class="secure-badge">● SECURE</span></div>
+    <form id="authForm" novalidate>
+      <div id="nameField" class="field hidden"><label for="fullName">Full name</label><div class="input-wrap"><span data-icon="user"></span><input id="fullName" type="text" maxlength="120" autocomplete="name" placeholder="Your full name"></div></div>
+      <div class="field"><label for="email">Email</label><div class="input-wrap"><span data-icon="mail"></span><input id="email" type="email" autocomplete="email" placeholder="you@example.com" required></div></div>
+      <div class="field"><label for="password">Password</label><div class="input-wrap"><span data-icon="lock"></span><input id="password" type="password" minlength="6" autocomplete="current-password" placeholder="Enter your password" required><button type="button" id="revealPass" class="reveal-pass" aria-label="Show password">Show</button></div></div>
+      <button id="authSubmit" class="primary-btn auth-submit" type="submit"><span id="authSubmitText">Enter workspace</span><i data-icon="arrow"></i></button>
+    </form>
+    <button id="toggleAuth" class="switch-btn">New here? Create an account</button>
+    <div class="auth-foot"><span data-icon="shield"></span><span>Password is protected with server-side hashing.</span></div>
+  </div>
+  <div class="auth-trust"><span>Secure authentication</span><span>Persistent workspace</span><span>REST API</span></div>
+</section>
+
+<section id="workspaceView" class="workspace-view hidden">
+  <aside id="sidebar" class="sidebar" aria-label="TaskFlow navigation">
+    <div class="side-brand"><button class="brand side-brand-btn" id="sideBrand" type="button"><span class="brand-mark">TF</span><span><strong>Task<span>Flow</span></strong><small>PRODUCTIVITY OS</small></span></button></div>
+    <button id="workspaceSwitcher" class="workspace-switcher"><span class="workspace-dot"></span><span><b>Personal</b><small>Workspace</small></span><i>⌄</i></button>
+    <div class="side-section"><span class="side-label">WORKSPACE</span>
+      <button class="nav-item active" data-view="overview"><i data-icon="grid"></i><span>Overview</span></button>
+      <button class="nav-item" data-view="tasks"><i data-icon="check"></i><span>My Tasks</span></button>
+      <button class="nav-item" data-view="today"><i data-icon="calendar"></i><span>Today</span></button>
+      <button class="nav-item" data-view="priority"><i data-icon="flag"></i><span>Priority</span></button>
+      <button class="nav-item" data-view="analytics"><i data-icon="chart"></i><span>Analytics</span></button>
+    </div>
+    <div class="side-section"><span class="side-label">PRODUCTIVITY</span>
+      <button class="nav-item" data-view="focus"><i data-icon="focus"></i><span>Focus</span></button>
+      <button class="nav-item vaani-nav" data-view="vaani"><i data-icon="spark"></i><span>Ask Vaani</span><em>AI</em></button>
+    </div>
+    <div class="side-spacer"></div>
+    <div class="side-section side-account"><span class="side-label">ACCOUNT</span>
+      <button class="nav-item" data-view="settings"><i data-icon="settings"></i><span>Settings</span></button>
+    </div>
+    <div class="side-user"><span class="avatar" id="sidebarAvatar">JV</span><div><b id="sidebarName">Jitendra Kumar Verma</b><small id="sidebarEmail">workspace</small></div><button id="newTaskSide" class="mini-add" title="New task">+</button></div>
+  </aside>
+  <button id="mobileShade" class="mobile-shade hidden" aria-label="Close navigation"></button>
+  <button id="sidebarToggle" class="sidebar-toggle" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
+  <div class="workspace-main"><div class="workspace-toolbar"><button id="commandSide" class="toolbar-btn"><i data-icon="command"></i> Quick Actions <kbd>⌘K</kbd></button><button id="searchSide" class="toolbar-btn"><i data-icon="search"></i> Search</button></div><div id="viewRoot"></div></div>
+</section>
+</main>
+
+<div id="modalRoot"></div><div id="detailModal" class="overlay-root hidden"></div>
+<div id="commandModal" class="overlay-root hidden"><div class="overlay-backdrop" data-close-command></div><div class="command-modal"><div class="command-head"><div><span class="section-kicker">QUICK ACTIONS</span><h2>Quick Actions</h2></div><button class="icon-btn" data-close-command>×</button></div><div class="command-search"><i data-icon="search"></i><input id="commandInput" placeholder="Search quick actions…" autocomplete="off"></div><div id="commandList"></div></div></div>
+<div id="toastRoot" class="toast-root" aria-live="polite"></div>
+<script src="config.js"></script><script src="app.js"></script>
+</body></html>
