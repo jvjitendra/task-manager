@@ -13,8 +13,19 @@ from werkzeug.security import check_password_hash, generate_password_hash
 app = Flask(__name__)
 
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///tasks.db")
+
 if DATABASE_URL.startswith("postgres://"):
-    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
+    DATABASE_URL = DATABASE_URL.replace(
+        "postgres://",
+        "postgresql+psycopg2://",
+        1
+    )
+elif DATABASE_URL.startswith("postgresql://"):
+    DATABASE_URL = DATABASE_URL.replace(
+        "postgresql://",
+        "postgresql+psycopg2://",
+        1
+    )
 
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY", "dev-secret-change-me")
 app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL
@@ -73,7 +84,6 @@ class Task(db.Model):
         onupdate=lambda: datetime.now(timezone.utc),
         nullable=False,
     )
-    due_at = db.Column(db.DateTime(timezone=True), nullable=True, index=True)
 
     def to_dict(self):
         return {
@@ -84,36 +94,8 @@ class Task(db.Model):
             "priority": self.priority,
             "created_at": self.created_at.isoformat(),
             "updated_at": self.updated_at.isoformat(),
-            "due_at": self.due_at.isoformat() if self.due_at else None,
         }
 
-
-def parse_due_at(value):
-    if value in (None, ""):
-        return None
-    if not isinstance(value, str):
-        raise ValueError("due_at must be an ISO datetime string")
-    raw=value.strip().replace("Z", "+00:00")
-    try:
-        dt=datetime.fromisoformat(raw)
-    except ValueError as exc:
-        raise ValueError("due_at must be a valid ISO datetime") from exc
-    if dt.tzinfo is None:
-        dt=dt.replace(tzinfo=timezone.utc)
-    return dt
-
-def ensure_task_columns():
-    inspector=inspect(db.engine)
-    if "tasks" not in inspector.get_table_names():
-        return
-    cols={c["name"] for c in inspector.get_columns("tasks")}
-    if "due_at" in cols:
-        return
-    with db.engine.begin() as conn:
-        if db.engine.url.get_backend_name()=="sqlite":
-            conn.execute(text("ALTER TABLE tasks ADD COLUMN due_at DATETIME"))
-        else:
-            conn.execute(text("ALTER TABLE tasks ADD COLUMN due_at TIMESTAMP WITH TIME ZONE"))
 
 def ensure_legacy_user_columns():
     """
@@ -151,7 +133,6 @@ def ensure_legacy_user_columns():
 
 with app.app_context():
     db.create_all()
-    ensure_task_columns()
     # Only run schema compatibility changes for SQLite-style local development.
     if DATABASE_URL.startswith("sqlite"):
         ensure_legacy_user_columns()
@@ -221,9 +202,6 @@ def validate_task_payload(data, partial=False):
 
     if "priority" in data and data["priority"] not in {"low", "medium", "high"}:
         return "Priority must be low, medium, or high."
-    if "due_at" in data and data.get("due_at") not in (None, ""):
-        try: parse_due_at(data.get("due_at"))
-        except ValueError as exc: return str(exc)
 
     return None
 
@@ -235,26 +213,6 @@ def user_payload(user):
         "full_name": friendly_name(user),
     }
 
-
-@app.get("/api/stats")
-@token_required
-def stats(current_user):
-    uid=current_user.id
-    tasks=Task.query.filter_by(user_id=uid).all()
-    now=datetime.now(timezone.utc)
-    total=len(tasks); completed=sum(t.status=="done" for t in tasks)
-    def aware(dt): return dt.replace(tzinfo=timezone.utc) if dt and dt.tzinfo is None else dt
-    overdue=sum(bool(t.due_at and t.status!="done" and aware(t.due_at) < now) for t in tasks)
-    due_today=sum(bool(t.due_at and aware(t.due_at).astimezone().date()==now.astimezone().date() and t.status!="done") for t in tasks)
-    high=sum(t.priority=="high" and t.status!="done" for t in tasks)
-    return jsonify({"total":total,"completed":completed,"active":total-completed,"high_priority":high,"overdue":overdue,"due_today":due_today,"completion_rate":round((completed/total)*100,1) if total else 0})
-
-@app.get("/api/vaani/context")
-@token_required
-def vaani_context(current_user):
-    uid=current_user.id; user=current_user
-    tasks=Task.query.filter_by(user_id=uid).order_by(Task.due_at.asc().nullslast(), Task.created_at.desc()).all()
-    return jsonify({"user":{"id":user.id,"email":user.email,"full_name":user.full_name},"tasks":[t.to_dict() for t in tasks],"stats":stats().get_json()})
 
 @app.get("/")
 def health():
@@ -366,7 +324,6 @@ def create_task(current_user):
         description=str(data.get("description", "")).strip(),
         status=data.get("status", "pending"),
         priority=data.get("priority", "medium"),
-        due_at=parse_due_at(data.get("due_at")),
         user_id=current_user.id,
     )
 
