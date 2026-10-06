@@ -94,7 +94,6 @@ function initials(name){return friendlyName(name,"Jitendra Kumar Verma").split(/
 function setProfile(user){
   const name=friendlyName(user.full_name,user.email);
   $("sidebarName").textContent=name;
-  $("sidebarEmail").textContent=user.email||"workspace";
   $("sidebarAvatar").textContent=initials(name);
   $("profileTop").dataset.initials=initials(name);
 }
