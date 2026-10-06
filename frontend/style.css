@@ -1959,3 +1959,11 @@ body.workspace-active .profile-page .beyond p{
 
 /* V12 sidebar cleanup: account email removed; keep the user identity compact. */
 .side-user>div{min-width:0;flex:1}.side-user b{color:#f0f3f8}
+
+
+/* V13 visibility + account identity correction */
+body.workspace-active .side-brand-btn strong{color:#24334b!important}
+body.workspace-active .side-brand-btn strong span{color:#6878e8!important}
+body.workspace-active .side-brand-btn small{color:#66758a!important}
+body.workspace-active .side-user b{color:#26344c!important}
+body.workspace-active .side-user small{color:#7b8798!important}
