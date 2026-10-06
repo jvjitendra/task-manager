@@ -17,6 +17,7 @@ def setup_function():
 
 
 def test_health():
+    assert True
     client = app.test_client()
     response = client.get("/")
 
