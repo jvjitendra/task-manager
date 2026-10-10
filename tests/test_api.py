@@ -24,6 +24,7 @@ def test_health():
     body = response.get_json()
     assert body["status"] == "ok"
     assert body["database"] == "ok"
+    assert body["service"] == "TaskFlow API"
 
 
 def test_register_and_login_with_email():
