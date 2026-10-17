@@ -1,0 +1,17 @@
+{
+  "name": "TaskFlow — Productivity OS",
+  "short_name": "TaskFlow",
+  "description": "A focused productivity workspace for tasks, priorities and progress.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0d1117",
+  "theme_color": "#f4f6f9",
+  "icons": [
+    {
+      "src": "./assets/projects/taskflow.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

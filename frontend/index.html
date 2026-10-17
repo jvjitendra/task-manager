@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="manifest" href="manifest.json">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -22,7 +23,7 @@
   <div class="top-actions">
     <div class="live-time" aria-live="polite"><strong id="liveClock">--:--</strong><span id="liveDate">Loading date</span><em id="liveZone">Asia/Calcutta · GMT+5:30</em></div>
     <span class="api-pill" id="apiPill"><i></i><span id="apiStatus">CHECKING API</span></span>
-    <button class="icon-btn top-icon" id="commandTop" title="Quick Actions" aria-label="Quick Actions">⌘K</button>
+    <button class="icon-btn top-icon" id="commandTop" title="Quick Actions (Ctrl+K)" aria-label="Quick Actions"><i data-icon="command"></i></button>
     <button class="developer-top" id="profileTop" aria-label="Know the developer"><i data-icon="user"></i><span>Know the Developer</span></button>
     <button id="logoutBtn" class="ghost-btn hidden">Log out</button>
   </div>
